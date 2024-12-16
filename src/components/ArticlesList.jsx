@@ -2,23 +2,27 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { ArticleCard } from "./ArticleCard.jsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router";
+import Spinner from "react-bootstrap/Spinner";
+import { convertDate } from "../utils.js";
+import { Loading } from "./Loading.jsx";
 
-export const AllArticles = () => {
+export const ArticlesList = () => {
   const [articles, setArticles] = useState([]);
-  const [isLoading, setisLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get("https://news-api-40x5.onrender.com/api/articles")
       .then(({ data: { articles } }) => {
         setArticles(articles);
-        setisLoading(false);
+        setIsLoading(false);
       });
   }, []);
 
   return (
-    <div className={"all-articles"}>
-      <div className={"all-articles-top"}>
+    <section className={"all-articles"}>
+      <header className={"all-articles-top"}>
         <h2>All articles </h2>
         <Dropdown>
           <Dropdown.Toggle variant="danger" id="dropdown-basic">
@@ -30,24 +34,29 @@ export const AllArticles = () => {
             <Dropdown.Item href="">Date</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-      </div>
-      <div className={"articles"}>
+      </header>
+      <section className={"articles"}>
         {isLoading ? (
-          <p>Loading ... </p>
+          <Loading />
         ) : (
           articles.map((article) => {
             return (
-              <ArticleCard
+              <Link
+                className={"link"}
                 key={article.id}
-                title={article.title}
-                imgUrl={article.article_img_url}
-                author={article.author}
-                createdAt={article.created_at}
-              />
+                to={`/articles/${article.article_id}`}
+              >
+                <ArticleCard
+                  title={article.title}
+                  imgUrl={article.article_img_url}
+                  author={article.author}
+                  createdAt={convertDate(article.created_at)}
+                />
+              </Link>
             );
           })
         )}
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
