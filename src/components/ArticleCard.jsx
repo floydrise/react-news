@@ -9,7 +9,7 @@ export const ArticleCard = ({ title, imgUrl, author, createdAt }) => {
           <Card.Title>{title}</Card.Title>
           <Card.Text>
             Author: {author} <br />
-            Date: {createdAt}
+            Published: <em>{createdAt}</em>
           </Card.Text>
         </Card.Body>
       </Card>
