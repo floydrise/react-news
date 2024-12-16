@@ -25,7 +25,7 @@ export const ArticlesList = () => {
       <header className={"all-articles-top"}>
         <h2>All articles </h2>
         <Dropdown>
-          <Dropdown.Toggle variant="danger" id="dropdown-basic">
+          <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
             Sort by
           </Dropdown.Toggle>
           <Dropdown.Menu>
