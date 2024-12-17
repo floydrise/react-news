@@ -167,3 +167,9 @@ main {
     flex-direction: row;
     gap: 0.5em;
 }
+
+.hide-comments {
+    color: slategray;
+    text-decoration: underline dotted;
+    cursor: pointer;
+}

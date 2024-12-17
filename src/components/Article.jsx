@@ -10,6 +10,12 @@ export const Article = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState([]);
   const [article, setArticle] = useState({});
+  const [areHidden, setAreHidden] = useState(true);
+
+  const handleHiding = () => {
+    setAreHidden(!areHidden);
+  }
+
   useEffect(() => {
     axios
       .get(`https://news-api-40x5.onrender.com/api/articles/${article_id}`)
@@ -54,14 +60,16 @@ export const Article = () => {
             </section>
             <section className={"comment-section"}>
               <h4>Comments:</h4>
-              {comments.map((comment) => {
+              {/*TODO: add show/hide comments*/}
+              <p className={"hide-comments"} onClick={handleHiding}>{areHidden ? "Show comments" : "Hide comments"}</p>
+              {areHidden ? null : comments.map((comment) => {
                 return (
-                  <CommentCard
-                    key={comment.comment_id}
-                    author={comment.author}
-                    createdAt={convertDate(comment.created_at)}
-                    body={comment.body}
-                  />
+                    <CommentCard
+                        key={comment.comment_id}
+                        author={comment.author}
+                        createdAt={convertDate(comment.created_at)}
+                        body={comment.body}
+                    />
                 );
               })}
             </section>
