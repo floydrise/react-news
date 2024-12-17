@@ -2,20 +2,21 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { ArticleCard } from "./ArticleCard.jsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router";
-import {convertDate, reqUrl} from "../utils.js";
+import {Link, useSearchParams} from "react-router";
+import { convertDate, reqUrl } from "../utils.js";
 import { Loading } from "./Loading.jsx";
 
 export const ArticlesList = () => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [searchParams, setSearchParams] = useSearchParams()
+  const topicQuery = searchParams.get("topic");
   useEffect(() => {
-    reqUrl.get("/articles?p=4").then(({ data: { articles } }) => {
+    reqUrl.get(topicQuery ? `/articles?topic=${topicQuery}` : `/articles?p=4`).then(({ data: { articles } }) => {
       setArticles(articles);
       setIsLoading(false);
     });
-  }, []);
+  }, [topicQuery]);
 
   return (
     <section className={"all-articles"}>
