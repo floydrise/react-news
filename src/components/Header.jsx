@@ -1,8 +1,7 @@
-import logo from "../assets/news-logo.jpg";
+import logo from "../assets/pagelogo.png"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router";
-import Spinner from "react-bootstrap/Spinner";
 import { Loading } from "./Loading.jsx";
 
 export const Header = () => {
@@ -23,6 +22,7 @@ export const Header = () => {
         <Link to={"/"}>
           <img className={"logo"} src={logo} alt={"logo of the website"} />
         </Link>
+        <h2 className={"header-text"}>Local and world news</h2>
       </div>
       <div className={"header-right"}>
         {isLoading ? (

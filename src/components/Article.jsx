@@ -6,16 +6,18 @@ import { Loading } from "./Loading.jsx";
 import { CommentCard } from "./CommentCard.jsx";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import error from "eslint-plugin-react/lib/util/error.js";
+import { CommentForm } from "./CommentForm.jsx";
 
 export const Article = () => {
   const { article_id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState([]);
   const [article, setArticle] = useState({});
-  const [areHidden, setAreHidden] = useState(true);
+  const [areHidden, setAreHidden] = useState(false);
   const [votes, setVotes] = useState(0);
   const [error, setError] = useState(null);
+  const [commentErr, setCommentErr] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleHiding = () => {
     setAreHidden(!areHidden);
@@ -59,12 +61,12 @@ export const Article = () => {
   useEffect(() => {
     axios
       .get(
-        `https://news-api-40x5.onrender.com/api/articles/${article_id}/comments`,
+        `https://news-api-40x5.onrender.com/api/articles/${article_id}/comments?p=1`,
       )
       .then(({ data: { comments } }) => {
-        setComments(comments);
+        setComments(comments.reverse());
       });
-  }, [article_id]);
+  }, [article_id, submitted]);
 
   const date = convertDate(article.created_at);
 
@@ -104,23 +106,35 @@ export const Article = () => {
                 </Button>
               </ButtonGroup>
             </section>
+            <section className={"comment-form"}>
+              {commentErr ? (
+                <p className={"comment-err"}>❌ {commentErr}</p>
+              ) : null}
+              <CommentForm
+                article_id={article_id}
+                setSubmitted={setSubmitted}
+                setCommentErr={setCommentErr}
+              />
+            </section>
             <section className={"comment-section"}>
               <h4>Comments:</h4>
               <p className={"hide-comments"} onClick={handleHiding}>
                 {areHidden ? "Show comments" : "Hide comments"}
               </p>
-              {areHidden
-                ? null
-                : comments.map((comment) => {
-                    return (
-                      <CommentCard
-                        key={comment.comment_id}
-                        author={comment.author}
-                        createdAt={convertDate(comment.created_at)}
-                        body={comment.body}
-                      />
-                    );
-                  })}
+              {areHidden ? null : comments.length === 0 ? (
+                <p>No comments yet, add one?</p>
+              ) : (
+                comments.map((comment) => {
+                  return (
+                    <CommentCard
+                      key={comment.comment_id}
+                      author={comment.author}
+                      createdAt={convertDate(comment.created_at)}
+                      body={comment.body}
+                    />
+                  );
+                })
+              )}
             </section>
           </>
         )}
