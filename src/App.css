@@ -198,3 +198,7 @@ main {
 .comment-err {
     color:red;
 }
+
+.comment-delete {
+    cursor: pointer;
+}

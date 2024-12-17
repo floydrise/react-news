@@ -1,4 +1,4 @@
-import logo from "../assets/pagelogo.png"
+import logo from "../assets/pageLogo.png"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router";

@@ -128,9 +128,11 @@ export const Article = () => {
                   return (
                     <CommentCard
                       key={comment.comment_id}
+                      comment_id={comment.comment_id}
                       author={comment.author}
                       createdAt={convertDate(comment.created_at)}
                       body={comment.body}
+                      setComments={setComments}
                     />
                   );
                 })
