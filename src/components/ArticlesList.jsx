@@ -13,7 +13,7 @@ export const ArticlesList = () => {
 
   useEffect(() => {
     axios
-      .get("https://news-api-40x5.onrender.com/api/articles")
+      .get("https://news-api-40x5.onrender.com/api/articles?p=4")
       .then(({ data: { articles } }) => {
         setArticles(articles);
         setIsLoading(false);
@@ -42,8 +42,8 @@ export const ArticlesList = () => {
           articles.map((article) => {
             return (
               <Link
+                key={article.article_id}
                 className={"link"}
-                key={article.id}
                 to={`/articles/${article.article_id}`}
               >
                 <ArticleCard

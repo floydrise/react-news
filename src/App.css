@@ -17,7 +17,7 @@ main {
 }
 
 .logo {
-    height: 7em;
+    height: 8.6em;
     padding: 1.5em;
 }
 
@@ -29,6 +29,11 @@ main {
     border-bottom: 2px solid #780000;
     background-color: #C1121F;
     height: 5.5em;
+}
+
+.header-text {
+    font-family: "times New Roman", serif;
+    color: #e3e3e3;
 }
 
 .header-left {
@@ -184,4 +189,12 @@ main {
 
 .voting-error {
     color: red;
+}
+
+.comment-form {
+    width: 60%;
+}
+
+.comment-err {
+    color:red;
 }
