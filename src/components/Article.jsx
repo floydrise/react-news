@@ -4,6 +4,9 @@ import axios from "axios";
 import { convertDate } from "../utils.js";
 import { Loading } from "./Loading.jsx";
 import { CommentCard } from "./CommentCard.jsx";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import error from "eslint-plugin-react/lib/util/error.js";
 
 export const Article = () => {
   const { article_id } = useParams();
@@ -11,10 +14,37 @@ export const Article = () => {
   const [comments, setComments] = useState([]);
   const [article, setArticle] = useState({});
   const [areHidden, setAreHidden] = useState(true);
+  const [votes, setVotes] = useState(0);
+  const [error, setError] = useState(null);
 
   const handleHiding = () => {
     setAreHidden(!areHidden);
-  }
+  };
+
+  const handleUpvote = () => {
+    setVotes((prevVotes) => prevVotes + 1);
+    setError(null);
+    axios
+      .patch(`https://news-api-40x5.onrender.com/api/articles/${article_id}`, {
+        inc_votes: 1,
+      })
+      .catch(() => {
+        setVotes((prevVotes) => prevVotes - 1);
+        setError("Action was not successful, please try again.");
+      });
+  };
+  const handleDownvote = () => {
+    setVotes((prevVotes) => prevVotes - 1);
+    setError(null);
+    axios
+      .patch(`https://news-api-40x5.onrender.com/api/articles/${article_id}`, {
+        inc_votes: -1,
+      })
+      .catch(() => {
+        setVotes((prevVotes) => prevVotes + 1);
+        setError("Action was not successful, please try again.");
+      });
+  };
 
   useEffect(() => {
     axios
@@ -22,6 +52,7 @@ export const Article = () => {
       .then(({ data: { article } }) => {
         setArticle(article);
         setIsLoading(false);
+        setVotes(article.votes);
       });
   }, [article_id]);
 
@@ -46,7 +77,11 @@ export const Article = () => {
           <>
             <section className={"article-main"}>
               <header className={"article-header"}>
-                <img className={"article-image"} src={article.article_img_url} alt={"Image representing the article"}/>
+                <img
+                  className={"article-image"}
+                  src={article.article_img_url}
+                  alt={"Image representing the article"}
+                />
                 <h3>{article.title}</h3>
                 <div className={"article-paras"}>
                   <p>
@@ -58,20 +93,34 @@ export const Article = () => {
               </header>
               <p className={"article-body"}>{article.body}</p>
             </section>
+            <section className={"voting-system"}>
+              {error ? <p className={"voting-error"}>❌ {error}</p> : null}
+              <ButtonGroup aria-label="Basic example">
+                <Button variant="outline-success" onClick={handleUpvote}>
+                  👍 {votes}
+                </Button>
+                <Button variant="outline-danger" onClick={handleDownvote}>
+                  👎
+                </Button>
+              </ButtonGroup>
+            </section>
             <section className={"comment-section"}>
               <h4>Comments:</h4>
-              {/*TODO: add show/hide comments*/}
-              <p className={"hide-comments"} onClick={handleHiding}>{areHidden ? "Show comments" : "Hide comments"}</p>
-              {areHidden ? null : comments.map((comment) => {
-                return (
-                    <CommentCard
+              <p className={"hide-comments"} onClick={handleHiding}>
+                {areHidden ? "Show comments" : "Hide comments"}
+              </p>
+              {areHidden
+                ? null
+                : comments.map((comment) => {
+                    return (
+                      <CommentCard
                         key={comment.comment_id}
                         author={comment.author}
                         createdAt={convertDate(comment.created_at)}
                         body={comment.body}
-                    />
-                );
-              })}
+                      />
+                    );
+                  })}
             </section>
           </>
         )}

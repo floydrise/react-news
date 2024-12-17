@@ -111,7 +111,6 @@ main {
     align-items: center;
     justify-content: center;
     gap: 2em;
-    /*border-bottom: 1px solid slategray;*/
 }
 
 .article-header {
@@ -172,4 +171,17 @@ main {
     color: slategray;
     text-decoration: underline dotted;
     cursor: pointer;
+}
+
+.voting-system {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1em;
+    width: 60%;
+}
+
+.voting-error {
+    color: red;
 }
