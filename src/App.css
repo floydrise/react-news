@@ -26,8 +26,8 @@ main {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid #003049;
-    background-color: #669BBC;
+    border-bottom: 2px solid #780000;
+    background-color: #C1121F;
     height: 5.5em;
 }
 
@@ -50,8 +50,8 @@ main {
     height: 3.5em;
     padding: 0.5em;
     border: 1px solid black;
-    border-radius: 40%;
-    background-color: #167bb6;
+    border-radius: 50%;
+    background-color: #FDF0D5;
 }
 
 .footer {
@@ -59,9 +59,10 @@ main {
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    border-top: 2px solid #003049;
-    background-color: #669BBC;
+    border-top: 2px solid #780000;
+    background-color: #C1121F;
     height: 3.5em;
+    color: floralwhite;
 }
 
 .all-articles-top {
@@ -104,13 +105,26 @@ main {
     gap: 1em;
 }
 
-.article-header {
+.article-paras {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 2em;
-    border-bottom: 1px solid slategray;
+    /*border-bottom: 1px solid slategray;*/
+}
+
+.article-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+.article-image {
+    max-width: 100%;
+    height: auto;
 }
 
 .article-main {
@@ -119,6 +133,43 @@ main {
     align-items: center;
     justify-content: center;
     gap: 1em;
-    width: 70%;
+    width: 65%;
     margin-top: 1em;
+}
+
+.article-body {
+    padding: 0.5em;
+    border-top: 1px solid slategray;
+    border-bottom: 1px solid slategray;
+}
+
+.comment-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid slategray;
+    background-color: #ececec;
+    border-radius: 1em;
+    padding: 0.4em;
+}
+
+.comment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+    width: 60%;
+    margin-bottom: 1em;
+}
+
+.test {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+}
+
+.hide-comments {
+    color: slategray;
+    text-decoration: underline dotted;
+    cursor: pointer;
 }
