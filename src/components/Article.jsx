@@ -1,7 +1,6 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { convertDate } from "../utils.js";
+import {convertDate, reqUrl} from "../utils.js";
 import { Loading } from "./Loading.jsx";
 import { CommentCard } from "./CommentCard.jsx";
 import Button from "react-bootstrap/Button";
@@ -26,8 +25,8 @@ export const Article = () => {
   const handleUpvote = () => {
     setVotes((prevVotes) => prevVotes + 1);
     setError(null);
-    axios
-      .patch(`https://news-api-40x5.onrender.com/api/articles/${article_id}`, {
+    reqUrl
+      .patch(`/articles/${article_id}`, {
         inc_votes: 1,
       })
       .catch(() => {
@@ -38,8 +37,8 @@ export const Article = () => {
   const handleDownvote = () => {
     setVotes((prevVotes) => prevVotes - 1);
     setError(null);
-    axios
-      .patch(`https://news-api-40x5.onrender.com/api/articles/${article_id}`, {
+    reqUrl
+      .patch(`/articles/${article_id}`, {
         inc_votes: -1,
       })
       .catch(() => {
@@ -49,8 +48,8 @@ export const Article = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`https://news-api-40x5.onrender.com/api/articles/${article_id}`)
+    reqUrl
+      .get(`/articles/${article_id}`)
       .then(({ data: { article } }) => {
         setArticle(article);
         setIsLoading(false);
@@ -59,9 +58,9 @@ export const Article = () => {
   }, [article_id]);
 
   useEffect(() => {
-    axios
+    reqUrl
       .get(
-        `https://news-api-40x5.onrender.com/api/articles/${article_id}/comments?p=1`,
+        `/articles/${article_id}/comments?p=1`,
       )
       .then(({ data: { comments } }) => {
         setComments(comments.reverse());

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Loading } from "./Loading.jsx";
+import {reqUrl} from "../utils.js";
 
 export const CommentCard = ({
   author,
@@ -13,8 +14,8 @@ export const CommentCard = ({
 
   const handleCommentDelete = () => {
     setLoadingDelete(true);
-    axios
-      .delete(`https://news-api-40x5.onrender.com/api/comments/${comment_id}`)
+    reqUrl
+      .delete(`/comments/${comment_id}`)
       .then(() => {
         setComments((prevComments) =>
           prevComments.filter((comment) => comment.comment_id !== comment_id),

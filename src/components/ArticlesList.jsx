@@ -3,8 +3,7 @@ import { ArticleCard } from "./ArticleCard.jsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router";
-import Spinner from "react-bootstrap/Spinner";
-import { convertDate } from "../utils.js";
+import {convertDate, reqUrl} from "../utils.js";
 import { Loading } from "./Loading.jsx";
 
 export const ArticlesList = () => {
@@ -12,12 +11,10 @@ export const ArticlesList = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("https://news-api-40x5.onrender.com/api/articles?p=4")
-      .then(({ data: { articles } }) => {
-        setArticles(articles);
-        setIsLoading(false);
-      });
+    reqUrl.get("/articles?p=4").then(({ data: { articles } }) => {
+      setArticles(articles);
+      setIsLoading(false);
+    });
   }, []);
 
   return (

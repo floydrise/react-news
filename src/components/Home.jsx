@@ -2,6 +2,8 @@ import {Link} from "react-router";
 
 export const Home = () => {
   return <>
-  <h1>Homepage in progress, please click <Link to="/articles">here</Link> to go to articles</h1>
+    <div className={"topics-homepage"}>
+      <h1>Homepage in progress, please click <Link to="/articles">here</Link> to go to articles</h1>
+    </div>
   </>;
 };

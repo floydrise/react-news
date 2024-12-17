@@ -1,8 +1,8 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
-import axios from "axios";
-import {Loading} from "./Loading.jsx";
+import { Loading } from "./Loading.jsx";
+import {reqUrl} from "../utils.js";
 
 export const CommentForm = ({ article_id, setSubmitted, setCommentErr }) => {
   const [input, setInput] = useState("");
@@ -17,9 +17,9 @@ export const CommentForm = ({ article_id, setSubmitted, setCommentErr }) => {
     } else {
       setIsSubmitting(true);
       setCommentErr(null);
-      axios
+      reqUrl
         .post(
-          `https://news-api-40x5.onrender.com/api/articles/${article_id}/comments`,
+          `/articles/${article_id}/comments`,
           {
             username: "tickle122",
             body: input.trim(),
@@ -30,7 +30,9 @@ export const CommentForm = ({ article_id, setSubmitted, setCommentErr }) => {
           setInput("");
         })
         .catch(() => setCommentErr("An error occurred, please try again later"))
-        .finally(() => setIsSubmitting(false));
+        .finally(() => {
+          setIsSubmitting(false);
+        });
     }
   };
 
@@ -50,7 +52,7 @@ export const CommentForm = ({ article_id, setSubmitted, setCommentErr }) => {
         />
       </Form.Group>
       <Button variant="warning" type="submit" disabled={isSubmitting}>
-        {isSubmitting ? <Loading/> : "Submit"}
+        {isSubmitting ? <Loading /> : "Submit"}
       </Button>
     </Form>
   );
