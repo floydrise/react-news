@@ -3,7 +3,6 @@ export const Footer = () => {
         <footer className={"footer"}>
             <p>About</p>
             <p>Contact</p>
-            <p>Social medias</p>
         </footer>
     );
 }
