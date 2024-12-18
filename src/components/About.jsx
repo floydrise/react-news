@@ -2,7 +2,7 @@ export const About = () => {
   return (
     <>
       <section className={"about-container"}>
-        <h1 style={{marginTop: "0.5em"}}>General information</h1>
+        <h1 style={{ marginTop: "0.5em" }}>General information</h1>
         <div className={"info-container"}>
           <p>
             This is a project imitating a real world news site. On the homepage
@@ -14,7 +14,9 @@ export const About = () => {
             will be implemented in the future.
           </p>
           <span>
-            <strong><p>Technologies used:</p></strong>
+            <strong>
+              <p>Technologies used:</p>
+            </strong>
             <p>Front end</p>
             <ul>
               <li>Node.js</li>
