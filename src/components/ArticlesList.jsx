@@ -56,60 +56,62 @@ export const ArticlesList = () => {
     <section className={"all-articles"}>
       <header className={"all-articles-top"}>
         <h2>All articles </h2>
-        <Dropdown>
-          <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
-            Sort by:{" "}
-            {sortBy === "created_at"
-              ? "date"
-              : sortBy === "comment_count"
-                ? "comment count"
-                : sortBy}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item
-              onClick={() => {
-                setSortBy("created_at");
-              }}
-            >
-              Date
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => {
-                setSortBy("votes");
-              }}
-            >
-              Votes
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => {
-                setSortBy("comment_count");
-              }}
-            >
-              Comment count
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        <Dropdown>
-          <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
-            Order: {order}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item
-              onClick={() => {
-                setOrder("asc");
-              }}
-            >
-              Ascending
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => {
-                setOrder("desc");
-              }}
-            >
-              Descending
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <div className={"all-articles-dropdowns"}>
+          <Dropdown>
+            <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
+              Sort by:{" "}
+              {sortBy === "created_at"
+                ? "date"
+                : sortBy === "comment_count"
+                  ? "comment count"
+                  : sortBy}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item
+                onClick={() => {
+                  setSortBy("created_at");
+                }}
+              >
+                Date
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  setSortBy("votes");
+                }}
+              >
+                Votes
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  setSortBy("comment_count");
+                }}
+              >
+                Comment count
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <Dropdown>
+            <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
+              Order: {order}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item
+                onClick={() => {
+                  setOrder("asc");
+                }}
+              >
+                Ascending
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  setOrder("desc");
+                }}
+              >
+                Descending
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
       </header>
       <section className={"articles"}>
         {isLoading ? (

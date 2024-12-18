@@ -69,11 +69,17 @@ main {
 
 .all-articles-top {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    flex-wrap: wrap;
     gap: 1.5em;
     margin: 1em;
+}
+
+.all-articles-dropdowns {
+    display: flex;
+    gap: 1em;
 }
 
 .articles {
@@ -214,6 +220,8 @@ main {
 .topic-cards {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     gap: 1em;
 }
 
