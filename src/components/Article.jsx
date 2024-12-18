@@ -1,11 +1,12 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import {convertDate, reqUrl} from "../utils.js";
+import { convertDate, reqUrl } from "../utils.js";
 import { Loading } from "./Loading.jsx";
 import { CommentCard } from "./CommentCard.jsx";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { CommentForm } from "./CommentForm.jsx";
+import { ErrorPage } from "./ErrorPage.jsx";
 
 export const Article = () => {
   const { article_id } = useParams();
@@ -48,20 +49,24 @@ export const Article = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
+    setError(null);
     reqUrl
       .get(`/articles/${article_id}`)
       .then(({ data: { article } }) => {
         setArticle(article);
         setIsLoading(false);
         setVotes(article.votes);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setError(err);
       });
   }, [article_id]);
 
   useEffect(() => {
     reqUrl
-      .get(
-        `/articles/${article_id}/comments?p=1`,
-      )
+      .get(`/articles/${article_id}/comments?p=1`)
       .then(({ data: { comments } }) => {
         setComments(comments.reverse());
       });
@@ -74,6 +79,8 @@ export const Article = () => {
       <article className={"article-container"}>
         {isLoading ? (
           <Loading />
+        ) : error ? (
+          <ErrorPage />
         ) : (
           <>
             <section className={"article-main"}>
@@ -120,7 +127,7 @@ export const Article = () => {
               <p className={"hide-comments"} onClick={handleHiding}>
                 {areHidden ? "Show comments" : "Hide comments"}
               </p>
-              {areHidden ? null : comments.length === 0 ? (
+              {areHidden ? null : comments.length < 1 ? (
                 <p>No comments yet, add one?</p>
               ) : (
                 comments.map((comment) => {

@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from "react-router";
 import { Home } from "./components/Home.jsx";
 import { Article } from "./components/Article.jsx";
+import { ErrorPage } from "./components/ErrorPage.jsx";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Header />
       <main>
         <Routes>
+          <Route path={"*"} element={<ErrorPage />} />
           <Route path={"/"} element={<Home />} />
           <Route path={"/articles"} element={<ArticlesList />} />
           <Route path={"/articles/:article_id"} element={<Article />} />

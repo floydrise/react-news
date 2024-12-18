@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import { convertDate, reqUrl } from "../utils.js";
 import { Loading } from "./Loading.jsx";
+import { ErrorPage } from "./ErrorPage.jsx";
 
 export const ArticlesList = () => {
   const [articles, setArticles] = useState([]);
@@ -12,7 +13,7 @@ export const ArticlesList = () => {
   const topicQuery = searchParams.get("topic");
   const sortBy = searchParams.get("sort_by") || "created_at";
   const order = searchParams.get("order") || "desc";
-
+  const [error, setError] = useState(null);
 
   const setSortBy = (sortBy) => {
     const newParams = new URLSearchParams(searchParams);
@@ -27,30 +28,42 @@ export const ArticlesList = () => {
   };
 
   useEffect(() => {
+    setError(null);
 
     const constructUrl = () => {
       const params = new URLSearchParams();
       if (topicQuery) params.append("topic", topicQuery);
       params.append("sort_by", sortBy);
       params.append("order", order);
-      return `/articles?${params.toString()}`
-    }
+      return `/articles?${params.toString()}`;
+    };
 
     reqUrl
       .get(constructUrl())
       .then(({ data: { articles } }) => {
         setArticles(articles);
         setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        setIsLoading(false);
       });
   }, [topicQuery, sortBy, order]);
 
-  return (
+  return error ? (
+    <ErrorPage />
+  ) : (
     <section className={"all-articles"}>
       <header className={"all-articles-top"}>
         <h2>All articles </h2>
         <Dropdown>
           <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
-            Sort by: {sortBy === "created_at" ? "date" : sortBy === "comment_count" ? "comment count" : sortBy  }
+            Sort by:{" "}
+            {sortBy === "created_at"
+              ? "date"
+              : sortBy === "comment_count"
+                ? "comment count"
+                : sortBy}
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item
@@ -67,9 +80,13 @@ export const ArticlesList = () => {
             >
               Votes
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => {
-              setSortBy("comment_count")
-            }}>Comment count</Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                setSortBy("comment_count");
+              }}
+            >
+              Comment count
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         <Dropdown>
@@ -78,16 +95,16 @@ export const ArticlesList = () => {
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item
-                onClick={() => {
-                  setOrder("asc");
-                }}
+              onClick={() => {
+                setOrder("asc");
+              }}
             >
               Ascending
             </Dropdown.Item>
             <Dropdown.Item
-                onClick={() => {
-                  setOrder("desc");
-                }}
+              onClick={() => {
+                setOrder("desc");
+              }}
             >
               Descending
             </Dropdown.Item>
