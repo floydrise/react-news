@@ -81,7 +81,7 @@ export const Home = () => {
             })
           )}
           <Link to={"/articles"}>
-            <Button variant={"warning"}>More</Button>
+            <Button variant={"warning"}>More articles</Button>
           </Link>
         </nav>
       </section>
