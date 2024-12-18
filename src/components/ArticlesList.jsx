@@ -1,22 +1,48 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import { ArticleCard } from "./ArticleCard.jsx";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import {Link, useSearchParams} from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { convertDate, reqUrl } from "../utils.js";
 import { Loading } from "./Loading.jsx";
 
 export const ArticlesList = () => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
   const topicQuery = searchParams.get("topic");
+  const sortBy = searchParams.get("sort_by") || "created_at";
+  const order = searchParams.get("order") || "desc";
+
+
+  const setSortBy = (sortBy) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("sort_by", sortBy);
+    setSearchParams(newParams);
+  };
+
+  const setOrder = (order) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("order", order);
+    setSearchParams(newParams);
+  };
+
   useEffect(() => {
-    reqUrl.get(topicQuery ? `/articles?topic=${topicQuery}` : `/articles?p=4`).then(({ data: { articles } }) => {
-      setArticles(articles);
-      setIsLoading(false);
-    });
-  }, [topicQuery]);
+
+    const constructUrl = () => {
+      const params = new URLSearchParams();
+      if (topicQuery) params.append("topic", topicQuery);
+      params.append("sort_by", sortBy);
+      params.append("order", order);
+      return `/articles?${params.toString()}`
+    }
+
+    reqUrl
+      .get(constructUrl())
+      .then(({ data: { articles } }) => {
+        setArticles(articles);
+        setIsLoading(false);
+      });
+  }, [topicQuery, sortBy, order]);
 
   return (
     <section className={"all-articles"}>
@@ -24,12 +50,47 @@ export const ArticlesList = () => {
         <h2>All articles </h2>
         <Dropdown>
           <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
-            Sort by
+            Sort by: {sortBy === "created_at" ? "date" : sortBy === "comment_count" ? "comment count" : sortBy  }
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item href="">Topic</Dropdown.Item>
-            <Dropdown.Item href="">Votes</Dropdown.Item>
-            <Dropdown.Item href="">Date</Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                setSortBy("created_at");
+              }}
+            >
+              Date
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                setSortBy("votes");
+              }}
+            >
+              Votes
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => {
+              setSortBy("comment_count")
+            }}>Comment count</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        <Dropdown>
+          <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
+            Order: {order}
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item
+                onClick={() => {
+                  setOrder("asc");
+                }}
+            >
+              Ascending
+            </Dropdown.Item>
+            <Dropdown.Item
+                onClick={() => {
+                  setOrder("desc");
+                }}
+            >
+              Descending
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </header>
@@ -49,6 +110,8 @@ export const ArticlesList = () => {
                   imgUrl={article.article_img_url}
                   author={article.author}
                   createdAt={convertDate(article.created_at)}
+                  votes={article.votes}
+                  comments={article.comment_count}
                 />
               </Link>
             );
