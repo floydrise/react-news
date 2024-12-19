@@ -2,7 +2,7 @@ import axios from "axios";
 
 const convertDate = (isoDate) => {
     const date = new Date(isoDate);
-    return date.toUTCString();
+    return date.toUTCString().match(/\w+.\w+.\w+.\w+:\w+/ig)[0];
 }
 
 export const reqUrl = axios.create({

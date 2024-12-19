@@ -1,6 +1,13 @@
 import Card from "react-bootstrap/Card";
 
-export const ArticleCard = ({ title, imgUrl, author, createdAt, votes, comments }) => {
+export const ArticleCard = ({
+  title,
+  imgUrl,
+  author,
+  createdAt,
+  votes,
+  comments,
+}) => {
   return (
     <div className={"article-card"}>
       <Card style={{ width: "18rem" }}>
@@ -8,10 +15,16 @@ export const ArticleCard = ({ title, imgUrl, author, createdAt, votes, comments 
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>
-            Author: {author} <br />
-            Published: <em>{createdAt}</em> <br />
-            Votes: {votes} <br />
-            Comments: {comments}
+            <span className={"article-card-text"}>
+              <span>✍️: {author}</span>
+              <span>
+                🗓️: <em>{createdAt}</em>
+              </span>
+              <span className={"article-card-votes-comments"}>
+                <span>👍👎: {votes}</span>
+                <span>💬: {comments}</span>
+              </span>
+            </span>
           </Card.Text>
         </Card.Body>
       </Card>

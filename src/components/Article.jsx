@@ -18,6 +18,7 @@ export const Article = () => {
   const [error, setError] = useState(null);
   const [commentErr, setCommentErr] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [date,setDate] = useState("")
 
   const handleHiding = () => {
     setAreHidden(!areHidden);
@@ -57,6 +58,7 @@ export const Article = () => {
         setArticle(article);
         setIsLoading(false);
         setVotes(article.votes);
+        setDate(convertDate(article.created_at));
       })
       .catch((err) => {
         setIsLoading(false);
@@ -72,7 +74,6 @@ export const Article = () => {
       });
   }, [article_id, submitted]);
 
-  const date = convertDate(article.created_at);
 
   return (
     <>

@@ -38,7 +38,7 @@ export const CommentCard = ({
             <Loading />
           ) : (
             <span className={"comment-delete"} onClick={handleCommentDelete}>
-              ❌
+              🗑️
             </span>
           )
         ) : null}

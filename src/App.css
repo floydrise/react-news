@@ -132,6 +132,7 @@ main {
 .article-image {
     max-width: 100%;
     height: auto;
+    border-radius: 5px;
 }
 
 .article-main {
@@ -300,4 +301,20 @@ main {
     --bs-pagination-disabled-bg: var(--bs-secondary-bg);
     --bs-pagination-disabled-border-color: var(--bs-border-color);
     list-style: none;
+}
+
+.article-card-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.article-card-votes-comments {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
