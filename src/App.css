@@ -269,3 +269,10 @@ main {
 .media-icon:hover {
     transform: scale(1.05);
 }
+
+.pageDisplay {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

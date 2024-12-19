@@ -68,7 +68,7 @@ export const ArticlesList = () => {
         <h2>All articles </h2>
         <div className={"all-articles-dropdowns"}>
           <Dropdown>
-            <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
+            <Dropdown.Toggle variant="outline-danger" id="dropdown-basic">
               Sort by:{" "}
               {sortBy === "created_at"
                 ? "date"
@@ -101,7 +101,7 @@ export const ArticlesList = () => {
             </Dropdown.Menu>
           </Dropdown>
           <Dropdown>
-            <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
+            <Dropdown.Toggle variant="outline-danger" id="dropdown-basic">
               Order: {order}
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -147,7 +147,9 @@ export const ArticlesList = () => {
           })
         )}
       </section>
+      <section className={"pageDisplay"}>
       <PageDisplay setActivePage={setActivePage} activePage={activePage} setPage={setPage}/>
+      </section>
     </section>
   );
 };
