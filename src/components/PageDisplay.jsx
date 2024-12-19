@@ -8,7 +8,7 @@ export const PageDisplay = ({ setActivePage, activePage, setPage }) => {
 
   return (
     <>
-      <Pagination>
+      <Pagination bsPrefix={"customPagination"}>
         {items.map((item) => {
           return (
             <Pagination.Item
