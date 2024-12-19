@@ -5,27 +5,36 @@ import { Link, useSearchParams } from "react-router";
 import { convertDate, reqUrl } from "../utils.js";
 import { Loading } from "./Loading.jsx";
 import { ErrorPage } from "./ErrorPage.jsx";
+import {PageDisplay} from "./PageDisplay.jsx";
 
 export const ArticlesList = () => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [error, setError] = useState(null);
   const topicQuery = searchParams.get("topic");
   const sortBy = searchParams.get("sort_by") || "created_at";
   const order = searchParams.get("order") || "desc";
-  const [error, setError] = useState(null);
+  const page = searchParams.get("p") || 1;
+  const [activePage, setActivePage] = useState(Number(page));
 
   const setSortBy = (sortBy) => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set("sort_by", sortBy);
-    setSearchParams(newParams);
+    const newSort = new URLSearchParams(searchParams);
+    newSort.set("sort_by", sortBy);
+    setSearchParams(newSort);
   };
 
   const setOrder = (order) => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set("order", order);
-    setSearchParams(newParams);
+    const newOrder = new URLSearchParams(searchParams);
+    newOrder.set("order", order);
+    setSearchParams(newOrder);
   };
+
+  const setPage = (page) => {
+    const newPage = new URLSearchParams(searchParams);
+    newPage.set("p", page);
+    setSearchParams(newPage);
+  }
 
   useEffect(() => {
     setError(null);
@@ -33,6 +42,7 @@ export const ArticlesList = () => {
     const constructUrl = () => {
       const params = new URLSearchParams();
       if (topicQuery) params.append("topic", topicQuery);
+      params.append("p", page);
       params.append("sort_by", sortBy);
       params.append("order", order);
       return `/articles?${params.toString()}`;
@@ -48,7 +58,7 @@ export const ArticlesList = () => {
         setError(err);
         setIsLoading(false);
       });
-  }, [topicQuery, sortBy, order]);
+  }, [topicQuery, sortBy, order, page]);
 
   return error ? (
     <ErrorPage />
@@ -137,6 +147,7 @@ export const ArticlesList = () => {
           })
         )}
       </section>
+      <PageDisplay setActivePage={setActivePage} activePage={activePage} setPage={setPage}/>
     </section>
   );
 };
