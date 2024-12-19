@@ -15,7 +15,7 @@ export const ArticlesList = () => {
   const topicQuery = searchParams.get("topic");
   const sortBy = searchParams.get("sort_by") || "created_at";
   const order = searchParams.get("order") || "desc";
-  const page = searchParams.get("p") || 1;
+  const page = searchParams.get("p") || "1";
   const [activePage, setActivePage] = useState(Number(page));
 
   const setSortBy = (sortBy) => {
@@ -148,7 +148,7 @@ export const ArticlesList = () => {
         )}
       </section>
       <section className={"pageDisplay"}>
-      <PageDisplay setActivePage={setActivePage} activePage={activePage} setPage={setPage}/>
+      <PageDisplay pagesNum={4} setActivePage={setActivePage} activePage={activePage} setPage={setPage}/>
       </section>
     </section>
   );

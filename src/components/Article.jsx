@@ -1,5 +1,5 @@
-import { useParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useParams, useSearchParams } from "react-router";
+import { useEffect, useRef, useState } from "react";
 import { convertDate, reqUrl } from "../utils.js";
 import { Loading } from "./Loading.jsx";
 import { CommentCard } from "./CommentCard.jsx";
@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { CommentForm } from "./CommentForm.jsx";
 import { ErrorPage } from "./ErrorPage.jsx";
+import { PageDisplay } from "./PageDisplay.jsx";
 
 export const Article = () => {
   const { article_id } = useParams();
@@ -18,7 +19,16 @@ export const Article = () => {
   const [error, setError] = useState(null);
   const [commentErr, setCommentErr] = useState(null);
   const [submitted, setSubmitted] = useState(false);
-  const [date,setDate] = useState("")
+  const [date, setDate] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get("p") || "1";
+  const [activePage, setActivePage] = useState(Number(page));
+
+  const setPage = (page) => {
+    const newPage = new URLSearchParams(searchParams);
+    newPage.set("p", page);
+    setSearchParams(newPage);
+  };
 
   const handleHiding = () => {
     setAreHidden(!areHidden);
@@ -68,12 +78,11 @@ export const Article = () => {
 
   useEffect(() => {
     reqUrl
-      .get(`/articles/${article_id}/comments?p=1`)
+      .get(`/articles/${article_id}/comments?p=${page}`)
       .then(({ data: { comments } }) => {
-        setComments(comments.reverse());
+        setComments(comments);
       });
-  }, [article_id, submitted]);
-
+  }, [article_id, page, submitted]);
 
   return (
     <>
@@ -131,18 +140,26 @@ export const Article = () => {
               {areHidden ? null : comments.length < 1 ? (
                 <p>No comments yet, add one?</p>
               ) : (
-                comments.map((comment) => {
-                  return (
-                    <CommentCard
-                      key={comment.comment_id}
-                      comment_id={comment.comment_id}
-                      author={comment.author}
-                      createdAt={convertDate(comment.created_at)}
-                      body={comment.body}
-                      setComments={setComments}
-                    />
-                  );
-                })
+                <>
+                  {comments.map((comment) => {
+                    return (
+                      <CommentCard
+                        key={comment.comment_id}
+                        comment_id={comment.comment_id}
+                        author={comment.author}
+                        createdAt={convertDate(comment.created_at)}
+                        body={comment.body}
+                        setComments={setComments}
+                      />
+                    );
+                  })}
+                  <PageDisplay
+                    pagesNum={Math.ceil(article.comment_count / 10)}
+                    activePage={activePage}
+                    setActivePage={setActivePage}
+                    setPage={setPage}
+                  />
+                </>
               )}
             </section>
           </>

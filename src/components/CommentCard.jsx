@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { Loading } from "./Loading.jsx";
 import {reqUrl} from "../utils.js";

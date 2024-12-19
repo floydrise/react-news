@@ -1,8 +1,13 @@
 import Pagination from "react-bootstrap/Pagination";
 
-export const PageDisplay = ({ setActivePage, activePage, setPage }) => {
+export const PageDisplay = ({
+  pagesNum,
+  setActivePage,
+  activePage,
+  setPage,
+}) => {
   let items = [];
-  for (let number = 1; number <= 4; number++) {
+  for (let number = 1; number <= pagesNum; number++) {
     items.push(number);
   }
 
