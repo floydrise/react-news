@@ -149,7 +149,7 @@ export const ArticlesList = () => {
       </section>
       <section className={"pageDisplay"}>
         <PageDisplay
-          pagesNum={4}
+          pagesNum={topicQuery ? 1 : 4}
           setActivePage={setActivePage}
           activePage={activePage}
           setPage={setPage}
