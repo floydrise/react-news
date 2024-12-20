@@ -5,10 +5,17 @@ export const PageDisplay = ({
   setActivePage,
   activePage,
   setPage,
+    scrollToCoordinates
 }) => {
   let items = [];
   for (let number = 1; number <= pagesNum; number++) {
     items.push(number);
+  }
+
+  const handleClick = (item) => {
+    setPage(item);
+    setActivePage(item);
+    window.scrollTo({ top: scrollToCoordinates, behavior: "instant"});
   }
 
   return (
@@ -19,11 +26,7 @@ export const PageDisplay = ({
             <Pagination.Item
               key={item}
               active={item === activePage}
-              onClick={() => {
-                setPage(item);
-                setActivePage(item);
-                window.scrollTo({ top: 0 });
-              }}
+              onClick={() => handleClick(item)}
             >
               {item}
             </Pagination.Item>

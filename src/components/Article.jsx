@@ -158,6 +158,7 @@ export const Article = () => {
                     activePage={activePage}
                     setActivePage={setActivePage}
                     setPage={setPage}
+                    scrollToCoordinates={1200}
                   />
                 </>
               )}

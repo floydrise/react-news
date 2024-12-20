@@ -5,7 +5,7 @@ import { Link, useSearchParams } from "react-router";
 import { convertDate, reqUrl } from "../utils.js";
 import { Loading } from "./Loading.jsx";
 import { ErrorPage } from "./ErrorPage.jsx";
-import {PageDisplay} from "./PageDisplay.jsx";
+import { PageDisplay } from "./PageDisplay.jsx";
 
 export const ArticlesList = () => {
   const [articles, setArticles] = useState([]);
@@ -34,7 +34,7 @@ export const ArticlesList = () => {
     const newPage = new URLSearchParams(searchParams);
     newPage.set("p", page);
     setSearchParams(newPage);
-  }
+  };
 
   useEffect(() => {
     setError(null);
@@ -148,7 +148,13 @@ export const ArticlesList = () => {
         )}
       </section>
       <section className={"pageDisplay"}>
-      <PageDisplay pagesNum={4} setActivePage={setActivePage} activePage={activePage} setPage={setPage}/>
+        <PageDisplay
+          pagesNum={4}
+          setActivePage={setActivePage}
+          activePage={activePage}
+          setPage={setPage}
+          scrollToCoordinates={0}
+        />
       </section>
     </section>
   );
