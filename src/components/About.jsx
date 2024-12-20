@@ -18,6 +18,7 @@ export const About = () => {
               <p>Technologies used:</p>
             </strong>
             <p>Front end</p>
+            <a href={"https://github.com/floydrise/react-news"} target={"_blank"}>GitHub repo</a>
             <ul>
               <li>Node.js</li>
               <li>React</li>
@@ -27,6 +28,7 @@ export const About = () => {
               <li>Bootstrap React</li>
             </ul>
             <p>Back end</p>
+            <a href={"https://github.com/floydrise/News-REST-API"} target={"_blank"}>GitHub repo</a>
             <ul>
               <li>Node.js</li>
               <li>Express</li>
@@ -34,15 +36,6 @@ export const About = () => {
               <li>Testing: Jest</li>
             </ul>
           </span>
-          <p>
-            GitHub repo:{" "}
-            <a
-              href={"https://github.com/floydrise/react-news"}
-              target={"_blank"}
-            >
-              redirect to GitHub
-            </a>
-          </p>
         </div>
       </section>
     </>
